@@ -1,6 +1,6 @@
 # 📡 Telco Customer Churn Prediction
 
-## Weekly Class AI/ML Advanced — Final Project
+# Weekly Class AI/ML Advanced — Final Project
 
 Aplikasi web berbasis **Streamlit** yang menggunakan model **Machine Learning (Klasifikasi)** untuk memprediksi apakah seorang pelanggan telekomunikasi akan **churn** (berhenti berlangganan) atau tetap loyal, berdasarkan profil demografi, layanan yang digunakan, dan informasi akun mereka.
 
