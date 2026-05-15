@@ -19,12 +19,17 @@ st.set_page_config(
 # -------------------------------------------------------
 st.markdown("""
 <style>
-    /* === Import Google Font === */
+    /* === Import Google Font & FontAwesome === */
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+    @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
 
     /* === Global === */
     html, body, [class*="st-"] {
         font-family: 'Inter', sans-serif;
+    }
+    /* Fix for Streamlit icons (expander arrows, etc) breaking */
+    .material-symbols-rounded, .material-icons, [class*="icon"] {
+        font-family: 'Material Symbols Rounded', 'Material Icons', sans-serif !important;
     }
     .block-container {
         padding-top: 2rem;
@@ -33,216 +38,193 @@ st.markdown("""
 
     /* === Hero Banner === */
     .hero-banner {
-        background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
-        border-radius: 20px;
-        padding: 3rem 2.5rem;
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        padding: 2.5rem;
         margin-bottom: 2rem;
         position: relative;
         overflow: hidden;
-        border: 1px solid rgba(255,255,255,0.08);
-    }
-    .hero-banner::before {
-        content: '';
-        position: absolute;
-        top: -50%;
-        right: -20%;
-        width: 500px;
-        height: 500px;
-        background: radial-gradient(circle, rgba(99,102,241,0.15) 0%, transparent 70%);
-        border-radius: 50%;
-    }
-    .hero-banner::after {
-        content: '';
-        position: absolute;
-        bottom: -30%;
-        left: -10%;
-        width: 400px;
-        height: 400px;
-        background: radial-gradient(circle, rgba(139,92,246,0.1) 0%, transparent 70%);
-        border-radius: 50%;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
     }
     .hero-title {
-        font-size: 2.6rem;
-        font-weight: 800;
-        background: linear-gradient(135deg, #c7d2fe 0%, #a78bfa 50%, #818cf8 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+        font-size: 2.4rem;
+        font-weight: 700;
+        color: #0f172a;
         margin-bottom: 0.5rem;
-        position: relative;
-        z-index: 1;
         letter-spacing: -0.5px;
     }
     .hero-subtitle {
-        color: #a5b4fc;
+        color: #64748b;
         font-size: 1.05rem;
-        line-height: 1.7;
-        max-width: 750px;
-        position: relative;
-        z-index: 1;
-        font-weight: 300;
+        line-height: 1.6;
+        max-width: 800px;
+        font-weight: 400;
     }
     .hero-badge {
         display: inline-block;
-        background: rgba(99,102,241,0.2);
-        border: 1px solid rgba(99,102,241,0.3);
-        color: #a5b4fc;
-        padding: 0.35rem 1rem;
-        border-radius: 50px;
-        font-size: 0.78rem;
-        font-weight: 500;
+        background: #eff6ff;
+        color: #2563eb;
+        padding: 0.3rem 0.8rem;
+        border-radius: 6px;
+        font-size: 0.8rem;
+        font-weight: 600;
         margin-bottom: 1rem;
-        position: relative;
-        z-index: 1;
+        text-transform: uppercase;
         letter-spacing: 0.5px;
+        border: 1px solid #bfdbfe;
     }
 
     /* === Metric Cards === */
     .metric-card {
-        background: linear-gradient(145deg, #1e1b4b 0%, #312e81 100%);
-        border: 1px solid rgba(99,102,241,0.2);
-        border-radius: 16px;
-        padding: 1.5rem;
-        text-align: center;
-        transition: all 0.3s ease;
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        padding: 1.25rem;
+        text-align: left;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+        transition: border-color 0.2s;
     }
     .metric-card:hover {
-        transform: translateY(-4px);
-        border-color: rgba(99,102,241,0.5);
-        box-shadow: 0 8px 30px rgba(99,102,241,0.15);
-    }
-    .metric-value {
-        font-size: 2.2rem;
-        font-weight: 800;
-        background: linear-gradient(135deg, #e0e7ff, #a5b4fc);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+        border-color: #cbd5e1;
     }
     .metric-label {
-        color: #8b8fa8;
-        font-size: 0.82rem;
+        color: #64748b;
+        font-size: 0.8rem;
         text-transform: uppercase;
-        letter-spacing: 1.5px;
-        margin-top: 0.3rem;
-        font-weight: 500;
+        letter-spacing: 0.5px;
+        font-weight: 600;
+    }
+    .metric-value {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #0f172a;
+        margin: 0.3rem 0;
     }
     .metric-delta {
         font-size: 0.85rem;
         font-weight: 600;
-        margin-top: 0.3rem;
     }
-    .delta-red { color: #f87171; }
-    .delta-green { color: #34d399; }
-    .delta-blue { color: #60a5fa; }
+    .delta-red { color: #ef4444; }
+    .delta-green { color: #10b981; }
+    .delta-blue { color: #3b82f6; }
 
     /* === Section Headers === */
     .section-header {
-        font-size: 1.1rem;
-        font-weight: 700;
-        color: #c7d2fe;
-        margin: 1.5rem 0 1rem 0;
-        padding-left: 0.8rem;
-        border-left: 3px solid #6366f1;
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #1e293b;
+        margin: 2rem 0 1rem 0;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid #e2e8f0;
     }
 
     /* === Result Cards === */
     .result-churn {
-        background: linear-gradient(135deg, #450a0a 0%, #7f1d1d 50%, #991b1b 100%);
-        border: 1px solid rgba(248,113,113,0.3);
-        border-radius: 16px;
+        background: #fef2f2;
+        border: 1px solid #fecaca;
+        border-radius: 12px;
         padding: 2rem;
         text-align: center;
     }
     .result-loyal {
-        background: linear-gradient(135deg, #022c22 0%, #064e3b 50%, #065f46 100%);
-        border: 1px solid rgba(52,211,153,0.3);
-        border-radius: 16px;
+        background: #f0fdf4;
+        border: 1px solid #bbf7d0;
+        border-radius: 12px;
         padding: 2rem;
         text-align: center;
     }
-    .result-icon { font-size: 3rem; margin-bottom: 0.5rem; }
+    .result-icon { 
+        font-size: 3rem; 
+        margin-bottom: 1rem;
+    }
     .result-title {
-        font-size: 1.5rem;
+        font-size: 1.4rem;
         font-weight: 700;
         margin-bottom: 0.5rem;
     }
-    .result-churn .result-title { color: #fca5a5; }
-    .result-loyal .result-title { color: #6ee7b7; }
+    .result-churn .result-title { color: #b91c1c; }
+    .result-loyal .result-title { color: #15803d; }
     .result-desc {
-        font-size: 0.95rem;
-        line-height: 1.6;
+        font-size: 1rem;
+        line-height: 1.5;
+        font-weight: 400;
     }
-    .result-churn .result-desc { color: #fecaca; }
-    .result-loyal .result-desc { color: #a7f3d0; }
+    .result-churn .result-desc { color: #991b1b; }
+    .result-loyal .result-desc { color: #166534; }
 
     /* === Probability Gauge === */
     .gauge-container {
-        background: rgba(15,12,41,0.6);
-        border: 1px solid rgba(99,102,241,0.15);
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
         border-radius: 12px;
-        padding: 1.2rem;
+        padding: 1.5rem;
         margin-top: 1rem;
         text-align: center;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.02);
     }
     .gauge-bar-bg {
         width: 100%;
-        height: 12px;
-        background: rgba(255,255,255,0.08);
-        border-radius: 6px;
+        height: 10px;
+        background: #f1f5f9;
+        border-radius: 5px;
         overflow: hidden;
-        margin: 0.8rem 0;
+        margin: 1rem 0;
     }
     .gauge-bar-fill {
         height: 100%;
-        border-radius: 6px;
-        transition: width 1s ease;
+        border-radius: 5px;
+        transition: width 1s ease-out;
     }
     .gauge-label {
-        font-size: 0.8rem;
-        color: #8b8fa8;
-        font-weight: 500;
+        font-size: 0.85rem;
+        color: #64748b;
+        font-weight: 600;
         text-transform: uppercase;
-        letter-spacing: 1px;
+        letter-spacing: 0.5px;
     }
     .gauge-value {
         font-size: 2rem;
-        font-weight: 800;
+        color: #0f172a;
+        font-weight: 700;
     }
 
     /* === Recommendation Card === */
     .reco-card {
-        background: rgba(99,102,241,0.08);
-        border: 1px solid rgba(99,102,241,0.2);
-        border-radius: 12px;
-        padding: 1.2rem 1.5rem;
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-left: 4px solid #3b82f6;
+        border-radius: 8px;
+        padding: 1.25rem 1.5rem;
         margin-top: 1rem;
     }
     .reco-card h4 {
-        color: #a5b4fc;
+        color: #1e293b;
         margin-bottom: 0.5rem;
-        font-size: 0.95rem;
+        font-size: 1rem;
+        font-weight: 600;
     }
     .reco-card ul {
-        color: #c7d2fe;
-        font-size: 0.9rem;
-        line-height: 1.8;
+        color: #475569;
+        font-size: 0.95rem;
+        line-height: 1.6;
         padding-left: 1.2rem;
     }
 
     /* === Team Card === */
     .team-card {
-        background: linear-gradient(145deg, #1e1b4b 0%, #312e81 100%);
-        border: 1px solid rgba(99,102,241,0.15);
-        border-radius: 16px;
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
         padding: 2rem;
         text-align: center;
         margin-top: 1rem;
     }
     .team-card h3 {
-        background: linear-gradient(135deg, #c7d2fe, #a78bfa);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        font-size: 1.2rem;
-        margin-bottom: 1rem;
+        color: #0f172a;
+        font-size: 1.3rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
     }
     .team-members {
         display: flex;
@@ -251,37 +233,65 @@ st.markdown("""
         gap: 1rem;
     }
     .member-chip {
-        background: rgba(99,102,241,0.15);
-        border: 1px solid rgba(99,102,241,0.25);
-        color: #c7d2fe;
-        padding: 0.5rem 1.2rem;
-        border-radius: 50px;
-        font-size: 0.85rem;
-        font-weight: 500;
+        background: #ffffff;
+        border: 1px solid #cbd5e1;
+        color: #334155;
+        padding: 1rem;
+        border-radius: 8px;
+        font-size: 0.95rem;
+        font-weight: 600;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.6rem;
+    }
+    .member-socials {
+        display: flex;
+        gap: 0.8rem;
+        font-size: 1.1rem;
+    }
+    .member-socials a {
+        text-decoration: none;
+        color: #64748b;
+        transition: transform 0.2s, color 0.2s;
+    }
+    .member-socials a:hover {
+        transform: scale(1.1);
+        color: #2563eb;
     }
 
     /* === Footer === */
     .footer {
         text-align: center;
-        color: #6b7280;
-        font-size: 0.8rem;
-        padding: 2rem 0 1rem 0;
-        border-top: 1px solid rgba(255,255,255,0.05);
+        color: #94a3b8;
+        font-size: 0.85rem;
+        padding: 2rem 0;
+        border-top: 1px solid #e2e8f0;
         margin-top: 3rem;
     }
     .footer a {
-        color: #818cf8;
+        color: #3b82f6;
         text-decoration: none;
     }
 
     /* === Tab styling === */
     .stTabs [data-baseweb="tab-list"] {
-        gap: 8px;
+        gap: 2rem;
+        border-bottom: 1px solid #e2e8f0;
+        padding-bottom: 0;
     }
     .stTabs [data-baseweb="tab"] {
-        border-radius: 10px;
-        padding: 10px 20px;
-        font-weight: 600;
+        padding: 0.5rem 0;
+        font-weight: 500;
+        color: #64748b;
+        border: none;
+        background: transparent;
+    }
+    .stTabs [aria-selected="true"] {
+        color: #2563eb !important;
+        background: transparent !important;
+        border-bottom: 2px solid #2563eb !important;
     }
 
     /* === Hide Streamlit branding === */
@@ -483,8 +493,143 @@ with tab1:
                 </div>
                 """, unsafe_allow_html=True)
 
+        # --- Custom Effects (Pure CSS, no iframe) ---
+        import random as _rnd
+
         if prediction == 1:
-            st.snow()
+            # === CHURN: Fire + Warning Triangle ===
+            fire_emojis = ['🔥', '🔥', '🔥', '💥', '⚡']
+            ember_colors = ['#ef4444', '#f97316', '#fbbf24', '#dc2626']
+
+            # Generate fire particles HTML
+            fire_particles = ""
+            for i in range(45):
+                emoji = _rnd.choice(fire_emojis)
+                left = _rnd.uniform(0, 100)
+                delay = _rnd.uniform(0, 1.5)
+                duration = _rnd.uniform(2, 3.5)
+                fire_particles += (
+                    f'<div style="position:fixed;bottom:-40px;left:{left}vw;font-size:28px;'
+                    f'pointer-events:none;z-index:9999;opacity:0;'
+                    f'animation:churnFire {duration}s {delay}s ease-out forwards;">{emoji}</div>'
+                )
+
+            # Generate ember dots HTML
+            for i in range(60):
+                left = _rnd.uniform(0, 100)
+                color = _rnd.choice(ember_colors)
+                delay = _rnd.uniform(0, 2)
+                duration = _rnd.uniform(2.5, 4)
+                size = _rnd.uniform(3, 7)
+                drift = _rnd.uniform(-100, 100)
+                fire_particles += (
+                    f'<div style="position:fixed;bottom:-10px;left:{left}vw;'
+                    f'width:{size}px;height:{size}px;border-radius:50%;background:{color};'
+                    f'pointer-events:none;z-index:9998;opacity:0;'
+                    f'animation:churnEmber {duration}s {delay}s ease-out forwards;'
+                    f'--drift:{drift}px;"></div>'
+                )
+
+            st.markdown(f"""
+            <style>
+                @keyframes churnFire {{
+                    0%   {{ opacity:0; transform:translateY(0) scale(0.5) rotate(0deg); }}
+                    15%  {{ opacity:1; }}
+                    75%  {{ opacity:0.8; }}
+                    100% {{ opacity:0; transform:translateY(-110vh) scale(1.3) rotate(35deg); }}
+                }}
+                @keyframes churnEmber {{
+                    0%   {{ opacity:0; transform:translateY(0) scale(1); }}
+                    15%  {{ opacity:1; }}
+                    100% {{ opacity:0; transform:translateY(-110vh) translateX(var(--drift)) scale(0.3); }}
+                }}
+                @keyframes churnWarning {{
+                    0%   {{ opacity:0; transform:scale(0.2) rotate(-10deg); }}
+                    12%  {{ opacity:1; transform:scale(1.4) rotate(5deg); }}
+                    25%  {{ transform:scale(0.9) rotate(-3deg); }}
+                    40%  {{ transform:scale(1.15) rotate(2deg); }}
+                    55%  {{ transform:scale(1.0) rotate(0deg); }}
+                    75%  {{ opacity:1; }}
+                    100% {{ opacity:0; transform:scale(1.6); }}
+                }}
+            </style>
+            {fire_particles}
+            <div style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;
+                        z-index:10000;display:flex;align-items:center;justify-content:center;">
+                <div style="font-size:130px;opacity:0;animation:churnWarning 2.5s ease-in-out forwards;
+                            filter:drop-shadow(0 0 50px rgba(239,68,68,0.8));">⚠️</div>
+            </div>
+            """, unsafe_allow_html=True)
+
+        else:
+            # === LOYAL: Confetti + Fireworks ===
+            st.balloons()
+
+            confetti_emojis = ['🎊', '🎉', '✨', '⭐', '🌟', '🥳', '🎆']
+            fw_colors = ['#34d399', '#6ee7b7', '#818cf8', '#a78bfa', '#fbbf24', '#f472b6', '#60a5fa']
+
+            loyal_html = ""
+            # Confetti falling from top
+            for i in range(50):
+                emoji = _rnd.choice(confetti_emojis)
+                left = _rnd.uniform(0, 100)
+                delay = _rnd.uniform(0, 2)
+                duration = _rnd.uniform(2.5, 4.5)
+                size = _rnd.uniform(16, 32)
+                loyal_html += (
+                    f'<div style="position:fixed;top:-40px;left:{left}vw;font-size:{size}px;'
+                    f'pointer-events:none;z-index:9999;opacity:0;'
+                    f'animation:loyalConfetti {duration}s {delay}s linear forwards;">{emoji}</div>'
+                )
+
+            # Firework burst dots
+            import math
+            burst_positions = [(20, 30), (75, 25), (50, 40), (35, 20), (65, 35)]
+            for bx, by in burst_positions:
+                b_delay = _rnd.uniform(0.2, 1.8)
+                for j in range(16):
+                    angle = (math.pi * 2 / 16) * j
+                    dist = _rnd.uniform(50, 100)
+                    fx = math.cos(angle) * dist
+                    fy = math.sin(angle) * dist
+                    color = _rnd.choice(fw_colors)
+                    sz = _rnd.uniform(4, 7)
+                    loyal_html += (
+                        f'<div style="position:fixed;left:{bx}vw;top:{by}vh;'
+                        f'width:{sz}px;height:{sz}px;border-radius:50%;background:{color};'
+                        f'pointer-events:none;z-index:9998;opacity:0;'
+                        f'animation:loyalBurst 1.5s {b_delay}s ease-out forwards;'
+                        f'--bx:{fx}px;--by:{fy}px;"></div>'
+                    )
+
+            st.markdown(f"""
+            <style>
+                @keyframes loyalConfetti {{
+                    0%   {{ opacity:1; transform:translateY(0) rotate(0deg) scale(1); }}
+                    50%  {{ opacity:1; }}
+                    100% {{ opacity:0; transform:translateY(110vh) rotate(720deg) scale(0.4); }}
+                }}
+                @keyframes loyalBurst {{
+                    0%   {{ opacity:0; transform:translate(0,0) scale(0); }}
+                    20%  {{ opacity:1; transform:translate(0,0) scale(1); }}
+                    100% {{ opacity:0; transform:translate(var(--bx),var(--by)) scale(0.2); }}
+                }}
+                @keyframes loyalCeleb {{
+                    0%   {{ opacity:0; transform:scale(0) rotate(-20deg); }}
+                    15%  {{ opacity:1; transform:scale(1.5) rotate(10deg); }}
+                    35%  {{ transform:scale(0.9) rotate(-5deg); }}
+                    50%  {{ transform:scale(1.1) rotate(2deg); }}
+                    70%  {{ opacity:1; transform:scale(1) rotate(0); }}
+                    100% {{ opacity:0; transform:scale(2); }}
+                }}
+            </style>
+            {loyal_html}
+            <div style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;
+                        z-index:10000;display:flex;align-items:center;justify-content:center;">
+                <div style="font-size:120px;opacity:0;animation:loyalCeleb 2.5s ease-out forwards;
+                            filter:drop-shadow(0 0 40px rgba(52,211,153,0.7));">🎉</div>
+            </div>
+            """, unsafe_allow_html=True)
 
 # -------------------------------------------------------
 # TAB 2 — DASHBOARD ANALYTICS
@@ -584,7 +729,7 @@ with tab2:
         st.info(f"📌 **{echeck/echeck_total*100:.0f}%** pengguna Electronic Check churn — dorong migrasi ke auto-payment!")
 
     st.write("")
-    with st.expander("🔎 Lihat Raw Data (10 baris pertama)"):
+    with st.expander("Lihat Raw Data (10 baris pertama)", icon="🔍"):
         st.dataframe(df.head(10), use_container_width=True)
 
 # -------------------------------------------------------
@@ -639,10 +784,38 @@ with tab3:
     <div class="team-card">
         <h3>👥 Group 1 — AI/ML Advanced</h3>
         <div class="team-members">
-            <div class="member-chip">🧑‍💻 Ilman Fadhil</div>
-            <div class="member-chip">🧑‍💻 Abdu Rahman</div>
-            <div class="member-chip">🧑‍💻 Azka Acuzio Raines Respati</div>
-            <div class="member-chip">🧑‍💻 Balqies Hawa</div>
+            <div class="member-chip">
+                <span>🧑‍💻 Ilman Fadhil</span>
+                <div class="member-socials">
+                    <a href="https://linkedin.com/in/ilman-fadhil/" target="_blank" title="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+                    <a href="#" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
+                    <a href="https://instagram.com/man.fdhl" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="member-chip">
+                <span>🧑‍💻 Abdu Rahman</span>
+                <div class="member-socials">
+                    <a href="#" target="_blank" title="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+                    <a href="#" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
+                    <a href="#" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="member-chip">
+                <span>🧑‍💻 Azka Acuzio Raines Respati</span>
+                <div class="member-socials">
+                    <a href="https://www.linkedin.com/in/azka-acuzio-8a8a08322" target="_blank" title="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+                    <a href="https://github.com/ZeinZio" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
+                    <a href="https://www.instagram.com/dwnzzy" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="member-chip">
+                <span>👩‍💻 Balqies Hawa</span>
+                <div class="member-socials">
+                    <a href="#" target="_blank" title="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+                    <a href="#" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
+                    <a href="#" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                </div>
+            </div>
         </div>
     </div>
     """, unsafe_allow_html=True)
