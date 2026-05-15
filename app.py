@@ -753,28 +753,28 @@ with tab3:
     with tech1:
         st.markdown("""
         <div class="metric-card">
-            <div class="metric-value" style="font-size:1.6rem;">🐍</div>
+            <div class="metric-value" style="font-size:1.8rem;"><i class="fa-brands fa-python" style="color: #3776AB;"></i></div>
             <div class="metric-label">Python</div>
         </div>
         """, unsafe_allow_html=True)
     with tech2:
         st.markdown("""
         <div class="metric-card">
-            <div class="metric-value" style="font-size:1.6rem;">📡</div>
+            <div class="metric-value" style="font-size:1.8rem;"><i class="fa-solid fa-bolt" style="color: #FF4B4B;"></i></div>
             <div class="metric-label">Streamlit</div>
         </div>
         """, unsafe_allow_html=True)
     with tech3:
         st.markdown("""
         <div class="metric-card">
-            <div class="metric-value" style="font-size:1.6rem;">🤖</div>
+            <div class="metric-value" style="font-size:1.8rem;"><i class="fa-solid fa-brain" style="color: #F7931E;"></i></div>
             <div class="metric-label">Scikit-Learn</div>
         </div>
         """, unsafe_allow_html=True)
     with tech4:
         st.markdown("""
         <div class="metric-card">
-            <div class="metric-value" style="font-size:1.6rem;">📊</div>
+            <div class="metric-value" style="font-size:1.8rem;"><i class="fa-solid fa-database" style="color: #150458;"></i></div>
             <div class="metric-label">Pandas</div>
         </div>
         """, unsafe_allow_html=True)
@@ -788,7 +788,7 @@ with tab3:
                 <span>🧑‍💻 Ilman Fadhil</span>
                 <div class="member-socials">
                     <a href="https://linkedin.com/in/ilman-fadhil/" target="_blank" title="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
-                    <a href="#" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
+                    <a href="https://github.com/ilmanfadhil" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
                     <a href="https://instagram.com/man.fdhl" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
                 </div>
             </div>
@@ -811,9 +811,9 @@ with tab3:
             <div class="member-chip">
                 <span>👩‍💻 Balqies Hawa</span>
                 <div class="member-socials">
-                    <a href="#" target="_blank" title="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
-                    <a href="#" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
-                    <a href="#" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://linkedin.com/in/balqies-hawa-zulaekha-893803216" target="_blank" title="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+                    <a href="https://github.com/balqieshzl" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
+                    <a href="https://instagram.com/balqieshz" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
                 </div>
             </div>
         </div>
